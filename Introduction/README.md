@@ -58,7 +58,8 @@ $ echo "set disassembly" > ~/.gdbinit
 * jle(jump if less than or equal to)
 * jmp - unconditional jump
 
-<img src="disassemble.png" alt="terminal screenshot" style="width: 300px; height: 200px;">
+<div align="center">
+<img src="disassemble.png" alt="terminal screenshot" style="width: 300px; height: 200px;"></div>
 
 1. I have set  a breakpoint at main() that means that program execution will pause before executing any instructions of main.
 

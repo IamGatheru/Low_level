@@ -76,8 +76,9 @@ $ echo "set disassembly" > ~/.gdbinit
 * t - Display in binary.
 
 - Let's use these in practice to examine the rip register:
-
-<img src="Examine(x).png" alt="terminal screenshot" style="width: 300px; height: 200px;">
+  
+<div align="center">
+<img src="Examine(x).png" alt="terminal screenshot" style="width: 300px; height: 200px;"></div>
 
  - First I have clerared the break point at main using 'clear'. Notice that the breakpoint address is the same as the address of rip(instruction pointer).
  - You can reference registers directly uisng $rip in the case of the instruction pointer.

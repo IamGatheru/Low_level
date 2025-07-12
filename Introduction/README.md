@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 
 The command required to generate firstprog_asm.txt is:
 
@@ -31,7 +31,7 @@ $ echo "set disassembly" > ~/.gdbinit
 - Computer memory is like a row of houses on a local street, each with its own address( a row of bytes, each with its own memory address).
 - The CPU which is effectively the brain of a computer accesses the memory in a given address to retrieve the machine language instructions that make up the compiled program.
 
-#Registers.
+# Registers.
 
 - CPUs/Processors have a special set of variables called registers. Most of the machine language instructions use these registers to read or write data.
 

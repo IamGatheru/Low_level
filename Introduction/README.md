@@ -51,12 +51,12 @@ $ echo "set disassembly" > ~/.gdbinit
 
 
 # Operations in assembly:
-mov - move from source to destination
-inc- increment
-sub - subtract
-cmp - compare values
-jle(jump if less than or equal to)
-jmp - unconditional jump
+* mov - move from source to destination
+* inc- increment
+* sub - subtract
+* cmp - compare values
+* jle(jump if less than or equal to)
+* jmp - unconditional jump
 
 <img src="disassemble.png" alt="terminal screenshot" style="width: 300px; height: 200px;">
 

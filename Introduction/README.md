@@ -60,6 +60,51 @@ $ echo "set disassembly" > ~/.gdbinit
 
 <img src="disassemble.png" alt="terminal screenshot" style="width: 300px; height: 200px;">
 
+1. I have set  a breakpoint at main() that means that program execution will pause before executing any instructions of main.
+
+2. The first three lines of the disassembly of main(shown in the screenshot above) are collectively known as the <em>function prologue</em> and are generated automatically by the compiler to set up memory for the rest of the main() function's local variables.
+
+# Examine command (shorthand x)
+- A running program is mostly just a processor and segments of memory. The examination of memory is critical to understanding what's really going on.
+
+- The examine command expects two arguments: the location in memory to examine and how o display that memory.
+- The display format of x uses  a shorthand, which is optionally preceded by a count of how many items to examine.
+- Here are some common format letters:
+* o - Display in octal.
+* x - Display in hexadecimal.
+* u - Display in unsigned
+* t - Display in binary.
+
+- Let's use these in practice to examine the rip register:
+
+<img src="Examine(x).png" alt="terminal screenshot" style="width: 300px; height: 200px;">
+
+ - First I have clerared the break point at main using 'clear'. Notice that the breakpoint address is the same as the address of rip(instruction pointer).
+ - You can reference registers directly uisng $rip in the case of the instruction pointer.
+  
+ - I have used the format letters to display the contents of instruction pointer(rip). I have further prepended ab optional number to examine multiple units of tyhe target address.
+
+- The default size of a  single unit is a four-byte unit called a word. The size of the display units for the examine command can be changed by adding a size letter to the end of the format letter.
+- The valid size letters are as follows:
+  * b - A single byte
+  * h - a half word, 2 bytes
+  * w - a word, 4 bytes.
+  * g - a giant, 8 bytes in size
+
+- The examine command also accepts the format letter i , short for instruction, to display the memory as disassembled assembly language instructions.
+- Memory at location RBP can be examined as follows:
+  1. Using i r rbp
+  2. x/4xb $rbp - 4
+  3. x/4xb $rbp - 4
+  4. print $rbp - 4
+  5. x/4xb $1
+  6. x/xw $1
+   
+- nexti command, shorthand for next instruction prompts the processor to read and execute the instruction at RIP and advance RIP to the next instruction.
+
+
+
+
 
 
 

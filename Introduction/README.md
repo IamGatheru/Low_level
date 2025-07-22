@@ -26,7 +26,7 @@ $ echo "set disassembly" > ~/.gdbinit
 
 - The destination and source values will either be a rtegister, a memory address, or a value.
 
-- To understand how computer memory is organized, we will use gdb  to examine the individual registers while pausing  program execution at certain points using gdb.
+- To understand how computer memory is organized, we will use gdb  to examine the individual registers while pausing  program execution at certain points using.
 - Effectively, I am going to include basic gdb commands and then discuss the output.
 - Computer memory is like a row of houses on a local street, each with its own address( a row of bytes, each with its own memory address).
 - The CPU which is effectively the brain of a computer accesses the memory in a given address to retrieve the machine language instructions that make up the compiled program.
@@ -103,6 +103,11 @@ $ echo "set disassembly" > ~/.gdbinit
   6. x/xw $1
    
 - nexti command, shorthand for next instruction prompts the processor to read and execute the instruction at RIP and advance RIP to the next instruction.
+
+# ASCII
+- The c format letter can be used to automatically look up  a byte on the ASCII table, and the s format will display an entire string of character data.
+
+- Effectively, the ESP that is moved into EBP refers to the 'current' position of the of the will be 'old' stack frame. Once the new stackframe finishes executing, its return value is returned to the calling function's stack frame.
 
 
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -27,10 +28,10 @@ int main(int argc, char *argv[]) {
   strcpy(buffer, argv[1]);    // Copy into buffer.
 
   printf("[DEBUG] buffer @ %p: \'%s\'n", buffer, buffer);
-  printf("[DEBUG] daafile @ %p: \'%s\'\n", datafile, datafile);
+  printf("[DEBUG] datafile @ %p: \'%s\'\n", datafile, datafile);
 
   // opening the file
-  fd = open(datafile, 0_WRONLY|0_CREAT|0_APPEND, S_IRUSR|S_IWUSR);
+  fd = open(datafile, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
   if(fd == -1)
     fatal("in main() while opening file");
   printf("[DEBUG] file descriptor is %d\n", fd);
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
     fatal("in  main() while writing userid to file");
   write(fd, "\n", 1); // Terminate line.
   
-  if(write(fd, buffer, strlen(buffer) == -1) // Write note.
+  if(write(fd, buffer, strlen(buffer) == -1)) // Write note.
     fatal("in main() while writing buffer to file");
   write(fd, "\n", 1);  // Terminate line.
 

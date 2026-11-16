@@ -5,6 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "hacking.h"
+#include <unistd.h>
 
 #define DATAFILE "/var/chance.data"  // File to store user data
 
@@ -97,7 +98,7 @@ int get_player_data() {
 
   uid = getuid();
 
-  fd = open(DATAFILE, 0_RDONLY);
+  fd = open(DATAFILE, O_RDONLY);
   if(fd == -1) //can't open the file, maybe it doesn't exist
     return -1;
   read_bytes = read(fd, &entry, sizeof(struct user));  // Read the first chunk.
@@ -126,10 +127,10 @@ void register_new_player() {
   player.uid = getuid();
   player.highscore = player.credits = 100;
 
-  fd = open(DATAFILE, 0_WRONLY|0_CREAT|0_APPEND, S_IRUSR|S_IWUSR);
+  fd = open(DATAFILE, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
   if(fd == -1)
     fatal("in register_new_player() while opening file");
-  write(fd, &player, sizeof(structuser));
+  write(fd, &player, sizeof(struct user));
   close(fd);
 
   printf("\nWelcome to the Game of Chance %s.\n", player.name);
@@ -143,12 +144,12 @@ void update_player_data() {
   int fd, i, read_uid;
   char burned_byte;
 
-  fd = open(DATAFILE, 0_RDWR);
+  fd = open(DATAFILE, O_RDWR);
   if(fd == -1) // If open fails here, something is really wrong.
     fatal("in update_player_data() while opening file");
   read(fd, &read_uid, 4);
   while(read_uid != player.uid) {
-    for(i = 0; i < sizeof(structuser) - 4; i++) // Read through the
+    for(i = 0; i < sizeof(struct user) - 4; i++) // Read through the
       read(fd, &burned_byte, 1); // rest of the struct.
     read(fd, &read_uid, 4);      // Read the uid from the next struct.
   }
@@ -168,7 +169,7 @@ void show_highscore() {
   int fd;
 
   printf("\n============| HIGH SCORE |===========\n");
-  fd = open(DATAFILE, 0_RDONLY);
+  fd = open(DATAFILE, O_RDONLY);
   if(fd == -1)
     fatal("in show_highscore() while opening file");
   while(read(fd, &entry, sizeof(struct user)) > 0) { // Loop until end of file.
@@ -190,6 +191,23 @@ void jackpot() {
   printf("*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+\n");
   printf("You have won the jackpot of 100 credits!\n");
   player.credits += 100;
+}
+
+// This function is used to input the player name, since
+// scanf("%s, &whatever) will stop input at the first space.
+
+void input_name() {
+  char *name_ptr, input_char = '\n';
+  while(input_char == '\n')  // Flush any leftover
+     scanf("%c", &input_char);// newline chars.
+
+  name_ptr = (char*) &(player.name);
+  while(input_char != '\n') {
+    *name_ptr = input_char;
+    scanf("%c", &input_char);
+    name_ptr++;
+  }
+  *name_ptr = 0; //Terminate string.
 }
 
 // This function prints the 3 cards for the Find the Ace game.
@@ -273,7 +291,7 @@ int pick_a_number() {
   printf("This game costs 10 credits to play. Simply pick a number\n");
   printf("between 1 and 20, and if you pick the winning number, you\n");
   printf("will win the jackpot of 100 credits!\n\n");
-  winning_number = rand() % 20) + 1; // Pick a number between 1 and 20.
+  winning_number = (rand() % 20) + 1; // Pick a number between 1 and 20.
   if(player.credits < 10) {
     printf("You only have %d credits.That's not enough to play!\n\n", player.credits);
     return -1; // Not enough credits to play
@@ -368,7 +386,7 @@ int find_the_ace() {
   pick--; // Adjust the pick since card numbering starts at 0.
   i = 0;
   while(i == ace || i == pick)  // Keep looping until
-    i++                         // we find a valid queen reveal.
+    i++;                         // we find a valid queen reveal.
   cards[i] = 'Q';
   print_cards("Revealing a queen", cards, pick);
 
@@ -416,4 +434,3 @@ int find_the_ace() {
   }
   return 0;
 }
-        printf

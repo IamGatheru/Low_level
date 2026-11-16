@@ -2,7 +2,9 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 #include "hacking.h"
+#include <unistd.h>
 
 #define FILENAME "/var/notes"
 
@@ -22,7 +24,8 @@ int main(int argc, char *argv[]) {
     searchstring[0] = 0;
 
   userid = getuid();
-  fd = open(FILENAME, 0_RDONLY);
+
+  fd = open(FILENAME, O_RDONLY);
   if(fd == -1)
     fatal("in main() while opening file for reading");
 
